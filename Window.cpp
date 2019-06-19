@@ -1,5 +1,7 @@
 #include "Window.h"
 #include "Triangle.h"
+#include "loadShader.cpp"
+
 Window* Window::_windowInstance = nullptr;
 
 WindowInfo::WindowInfo()
@@ -67,6 +69,10 @@ void Window::PrintInfo()
 void Window::Loop()
 {
 	Triangle* triangle = new Triangle;
+	GLuint programID = triangle->LoadShaders("SimpleVertexShader.vertexshader",
+		"SimpleFragmentShader.fragmentshader");
+
+	
 	while (true) {
 		SDL_Event e;
 		if (SDL_PollEvent(&e)) {
@@ -74,21 +80,11 @@ void Window::Loop()
 				break;
 		}
 		glClearColor(0, 1, 2, 1);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, triangle->vertexBuffer);
-		glVertexAttribPointer(
-			0,                  
-			3,                  
-			GL_FLOAT,           
-			GL_FALSE,           
-			0,                  
-			(void*)0            
-		);
+		glUseProgram(programID);
 
-		glDrawArrays(GL_TRIANGLES, 0, 3); 
-		glDisableVertexAttribArray(0);
+		triangle->Draw();
 
 		SDL_GL_SwapWindow(this->window);
 	}

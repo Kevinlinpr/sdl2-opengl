@@ -24,6 +24,9 @@
     <ClCompile Include="Triangle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="loadShader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -35,5 +38,16 @@
     <ClInclude Include="Triangle.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SimpleFragmentShader.fragmentshader">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="SimpleVertexShader.vertexshader">
+      <Filter>源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>
