@@ -2,6 +2,7 @@
 #include "GL/glew.h"
 #include "SDL.h"
 #include <iostream>
+#include <queue>
 
 
 struct WindowInfo {
@@ -24,8 +25,8 @@ public:
 	SDL_GLContext glContext;
 	SDL_Window* window;
 	SDL_Renderer* renderer;
-
 	void PrintInfo();
+	void LoadModel();
 	void Loop();
 	void Destory();
 	static void SetInstance(WindowInfo _info);

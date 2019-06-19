@@ -9,6 +9,7 @@ int main(int argc, char** argv) {
 		Window::SetInstance(windowInfo);
 		Window* windowInstance = Window::GetInstance();
 		windowInstance->PrintInfo();
+		windowInstance->LoadModel();
 		windowInstance->Loop();
 		windowInstance->Destory();
 	}

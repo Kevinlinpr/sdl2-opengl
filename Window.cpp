@@ -1,8 +1,8 @@
 #include "Window.h"
-#include "Triangle.h"
-#include "loadShader.cpp"
+#include "Shader.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
+#include "Geometric.h"
 
 Window* Window::_windowInstance = nullptr;
 
@@ -68,11 +68,22 @@ void Window::PrintInfo()
 	std::cout << "=== PRINT END ===" << std::endl;
 }
 
+void Window::LoadModel()
+{
+	std::cout << "LOAD MODEL." << std::endl;
+
+}
+
 void Window::Loop()
 {
-	Triangle* triangle = new Triangle;
-	GLuint programID = triangle->LoadShaders("SimpleVertexShader.vertexshader",
+	std::cout << "GAME LOOP." << std::endl;
+	
+	Painter painter;
+	Cube cube;
+	Triangle triangle;
+	GLuint programID = Shader::LoadShaders("SimpleVertexShader.vertexshader",
 		"SimpleFragmentShader.fragmentshader");
+
 	glm::mat4 Projection = glm::perspective(glm::radians(45.0f),
 		(float)this->windowInfo.width / (float)this->windowInfo.height, 0.1f, 100.0f);
 
@@ -103,7 +114,7 @@ void Window::Loop()
 
 		glUseProgram(programID);
 
-		triangle->Draw();
+		painter.Draw(cube, 36);
 
 		SDL_GL_SwapWindow(this->window);
 	}
