@@ -1,6 +1,8 @@
 #include "Window.h"
 #include "Triangle.h"
 #include "loadShader.cpp"
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
 
 Window* Window::_windowInstance = nullptr;
 
@@ -71,8 +73,21 @@ void Window::Loop()
 	Triangle* triangle = new Triangle;
 	GLuint programID = triangle->LoadShaders("SimpleVertexShader.vertexshader",
 		"SimpleFragmentShader.fragmentshader");
+	glm::mat4 Projection = glm::perspective(glm::radians(45.0f),
+		(float)this->windowInfo.width / (float)this->windowInfo.height, 0.1f, 100.0f);
+
+	glm::mat4 View = glm::lookAt(
+		glm::vec3(4, 3, 3),
+		glm::vec3(0, 0, 0),
+		glm::vec3(0, 1, 0)
+	);
+
+	glm::mat4 Model = glm::mat4(1.0f);
+
+	glm::mat4 mvp = Projection * View * Model;
 
 	
+
 	while (true) {
 		SDL_Event e;
 		if (SDL_PollEvent(&e)) {
@@ -81,6 +96,10 @@ void Window::Loop()
 		}
 		glClearColor(0, 1, 2, 1);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		GLuint MatrixID = glGetUniformLocation(programID, "MVP");
+
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
 		glUseProgram(programID);
 
